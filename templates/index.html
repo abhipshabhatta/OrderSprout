@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block title %}Your orders · OrderSprout{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+  <div>
+    <p class="eyebrow">YOUR ORDER BOOK</p>
+    <h1>Keep every order in view.</h1>
+    <p class="intro">
+      See what is due, what is ready and what is still to be paid.
+    </p>
+  </div>
+
+  <a class="button" href="{{ url_for('new_order') }}">
+    + Add an order
+  </a>
+</section>
+
+<section class="summary" aria-label="Order summary">
+  <article class="summary-card">
+    <span>Active orders</span>
+    <strong>{{ stats.active }}</strong>
+    <small>New, in progress or ready</small>
+  </article>
+
+  <article class="summary-card">
+    <span>Due today</span>
+    <strong>{{ stats.due_today }}</strong>
+    <small>Orders still to be delivered</small>
+  </article>
+
+  <article class="summary-card balance-card">
+    <span>Outstanding payments</span>
+    <strong>€{{ stats.outstanding | money }}</strong>
+    <small>Excluding cancelled orders</small>
+  </article>
+</section>
+
+<section class="order-panel">
+  <div class="panel-heading">
+    <h2>All orders</h2>
+    <span>{{ orders | length }} total · Earliest delivery first</span>
+  </div>
+
+  {% if orders %}
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Customer &amp; order</th>
+          <th scope="col">Delivery date</th>
+          <th scope="col">Status</th>
+          <th scope="col">Total</th>
+          <th scope="col">Paid so far</th>
+          <th scope="col">Remaining</th>
+          <th scope="col">
+            <span class="sr-only">Actions</span>
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for order in orders %}
+        <tr>
+          <td data-label="Customer & order">
+            <strong class="customer">{{ order.customer }}</strong>
+            <span class="item">{{ order.item }}</span>
+            <small class="order-number">
+              ORDER #{{ '%03d' | format(order.id) }}
+            </small>
+          </td>
+
+          <td data-label="Delivery date">
+            {{ order.delivery_date | friendly_date }}
+
+            {% if order.delivery_date < today
+                  and order.status not in ('Delivered', 'Cancelled') %}
+            <small class="overdue">Overdue</small>
+            {% endif %}
+          </td>
+
+          <td data-label="Status">
+            <span
+              class="status status-{{ order.status | lower | replace(' ', '-') }}"
+            >
+              {{ order.status }}
+            </span>
+          </td>
+
+          <td data-label="Total" class="amount">
+            €{{ order.total_cents | money }}
+          </td>
+
+          <td data-label="Paid so far" class="amount">
+            €{{ order.paid_cents | money }}
+          </td>
+
+          <td data-label="Remaining" class="amount remaining">
+            €{{ (order.total_cents - order.paid_cents) | money }}
+          </td>
+
+          <td data-label="Action">
+            <a
+              class="edit-link"
+              href="{{ url_for('edit_order', order_id=order.id) }}"
+              aria-label="Edit order {{ order.id }} for {{ order.customer }}"
+            >
+              Edit order
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% else %}
+  <div class="empty-state">
+    <div class="empty-mark" aria-hidden="true">+</div>
+    <h3>Your first order starts here.</h3>
+    <p>
+      Add a customer, a delivery date and an amount.<br>
+      We will keep the details together.
+    </p>
+    <a class="button" href="{{ url_for('new_order') }}">
+      Add your first order
+    </a>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}
