@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+
+{% block title %}
+  {{ 'Edit order' if editing else 'New order' }} · OrderSprout
+{% endblock %}
+
+{% block content %}
+<a class="back-link" href="{{ url_for('index') }}">
+  ← Back to your orders
+</a>
+
+<section class="form-heading">
+  <p class="eyebrow">
+    {{ 'KEEP IT UP TO DATE' if editing else 'A NEW ORDER' }}
+  </p>
+
+  <h1>
+    {{ 'Update this order.' if editing else 'Write down the details.' }}
+  </h1>
+
+  <p class="intro">
+    {% if editing %}
+      Record the latest payment and the progress of your order.
+    {% else %}
+      A few details now, one less thing to remember later.
+    {% endif %}
+  </p>
+</section>
+
+<form method="post" class="order-form">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+  {% if errors %}
+  <div class="error-summary" role="alert">
+    Please check the highlighted fields and try again.
+  </div>
+  {% endif %}
+
+  <div class="field">
+    <label for="customer">Customer name</label>
+    <input
+      id="customer"
+      name="customer"
+      value="{{ values.customer }}"
+      placeholder="For example, Maya"
+      maxlength="200"
+      required
+      {% if errors.customer %}
+      aria-invalid="true"
+      aria-describedby="customer-error"
+      {% endif %}
+    >
+
+    {% if errors.customer %}
+    <p class="field-error" id="customer-error">
+      {{ errors.customer }}
+    </p>
+    {% endif %}
+  </div>
+
+  <div class="field">
+    <label for="item">Order details</label>
+    <input
+      id="item"
+      name="item"
+      value="{{ values.item }}"
+      placeholder="For example, one birthday cake"
+      maxlength="200"
+      required
+      {% if errors.item %}
+      aria-invalid="true"
+      aria-describedby="item-error"
+      {% endif %}
+    >
+
+    {% if errors.item %}
+    <p class="field-error" id="item-error">
+      {{ errors.item }}
+    </p>
+    {% endif %}
+  </div>
+
+  <div class="field-row">
+    <div class="field">
+      <label for="delivery_date">Delivery date</label>
+      <input
+        type="date"
+        id="delivery_date"
+        name="delivery_date"
+        value="{{ values.delivery_date }}"
+        required
+        {% if errors.delivery_date %}
+        aria-invalid="true"
+        aria-describedby="date-error"
+        {% endif %}
+      >
+
+      {% if errors.delivery_date %}
+      <p class="field-error" id="date-error">
+        {{ errors.delivery_date }}
+      </p>
+      {% endif %}
+    </div>
+
+    <div class="field">
+      <label for="status">Order status</label>
+      <select
+        id="status"
+        name="status"
+        required
+        {% if errors.status %}
+        aria-invalid="true"
+        aria-describedby="status-error"
+        {% endif %}
+      >
+        {% for status in statuses %}
+        <option
+          value="{{ status }}"
+          {% if values.status == status %}selected{% endif %}
+        >
+          {{ status }}
+        </option>
+        {% endfor %}
+      </select>
+
+      {% if errors.status %}
+      <p class="field-error" id="status-error">
+        {{ errors.status }}
+      </p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="field-row">
+    <div class="field">
+      <label for="total">Order total (€)</label>
+      <input
+        type="number"
+        id="total"
+        name="total"
+        min="0"
+        max="999999.99"
+        step="0.01"
+        value="{{ values.total }}"
+        placeholder="40.00"
+        required
+        {% if errors.total %}
+        aria-invalid="true"
+        aria-describedby="total-error"
+        {% endif %}
+      >
+
+      {% if errors.total %}
+      <p class="field-error" id="total-error">
+        {{ errors.total }}
+      </p>
+      {% endif %}
+    </div>
+
+    <div class="field">
+      <label for="paid">Paid so far (€)</label>
+      <input
+        type="number"
+        id="paid"
+        name="paid"
+        min="0"
+        max="999999.99"
+        step="0.01"
+        value="{{ values.paid }}"
+        required
+        aria-describedby="paid-help{% if errors.paid %} paid-error{% endif %}"
+        {% if errors.paid %}
+        aria-invalid="true"
+        {% endif %}
+      >
+
+      <small class="field-help" id="paid-help">
+        Enter the total already received, including deposits.
+      </small>
+
+      {% if errors.paid %}
+      <p class="field-error" id="paid-error">
+        {{ errors.paid }}
+      </p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <a class="cancel-link" href="{{ url_for('index') }}">
+      Go back
+    </a>
+
+    <button type="submit" class="button">
+      {{ 'Save changes' if editing else 'Save order' }}
+    </button>
+  </div>
+</form>
+{% endblock %}
