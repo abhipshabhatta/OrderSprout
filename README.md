@@ -11,7 +11,8 @@ The first application milestone is in development.
 Creating orders, editing payments and statuses, and retaining data
 after restarting have been checked manually.
 
-Automated tests and further validation are still pending.
+The initial automated test suite passes all 19 tests.
+Further improvements will be developed in separate milestones.
 
 ## Features
 
@@ -82,7 +83,34 @@ The database is excluded from Git.
 - Confirmed the remaining balance became EUR 0.00.
 - Restarted the application and confirmed the order remained saved.
 
-Automated tests are still pending.
+## Automated tests
+
+Install the development dependencies with your virtual environment active:
+
+```bash
+python -m pip install -r requirements-dev.txt
+```
+
+Run the tests from the project folder:
+
+```bash
+python -m pytest -q
+```
+
+The initial suite contains 19 tests covering:
+
+- The empty dashboard.
+- Creating orders and displaying the remaining balance.
+- Editing payments and order status.
+- Rejecting invalid inputs without saving them.
+- Preserving existing data when an edit fails validation.
+- Rejecting missing or incorrect form security tokens.
+- Returning 404 for an order that does not exist.
+- Retaining orders across application restarts.
+
+Tests use temporary SQLite databases, separate from your local orders.
+
+Latest local result: 19 passed.
 
 ## Development approach
 
