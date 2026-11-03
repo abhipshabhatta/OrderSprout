@@ -73,3 +73,28 @@ Pull request: #2
 - Review the final pull request changes and available GitHub checks.
 - Mark the draft pull request ready for review.
 - Merge after review and update the local main branch.
+
+## Milestone 3: Continuous integration
+
+Status: Workflow verified on GitHub; awaiting pull request review
+
+Branch: codex/add-ci
+
+### Changes
+
+- Added a GitHub Actions workflow for pushes and pull requests to main.
+- Configured testing on Ubuntu with Python 3.13.
+- Added dependency caching and read-only repository permissions.
+- Documented the workflow in the README.
+
+### Validation
+
+- All 19 tests passed locally before adding the workflow.
+- Staged whitespace check passed.
+- The first GitHub Actions run completed successfully for commit 9f336f4.
+
+### Remaining work
+
+- Open and review the pull request.
+- Confirm the pull request test run passes.
+- Merge and verify the workflow on main.

@@ -112,6 +112,19 @@ Tests use temporary SQLite databases, separate from your local orders.
 
 Latest local result: 19 passed.
 
+## Continuous integration
+
+GitHub Actions runs the automated test suite on every push and on
+pull requests targeting main.
+
+The workflow uses Ubuntu and Python 3.13, installs development
+dependencies, and runs python -m pytest -q.
+
+Workflow configuration: .github/workflows/tests.yml
+
+To view results, open the repository's Actions tab and select Tests.
+A failed run should be investigated before merging.
+
 ## Development approach
 
 Work is organized into branches, meaningful commits, and pull requests.
