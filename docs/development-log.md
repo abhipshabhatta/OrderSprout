@@ -24,7 +24,7 @@ Branch: codex/project-setup
 
 ## Milestone 2: Local order management application
 
-Status: Implementation and local checks complete; awaiting PR review
+Status: Merged into main through pull request #2
 
 Branch: codex/add-order-book
 
@@ -67,16 +67,16 @@ Pull request: #2
 - Keep related implementation commits in one milestone branch.
 - Introduce CI and deployment in separate milestones.
 
-### Remaining work
+### Completion
 
-- Commit and push the updated documentation.
-- Review the final pull request changes and available GitHub checks.
-- Mark the draft pull request ready for review.
-- Merge after review and update the local main branch.
+- Merged through pull request #2.
+- Updated the local main branch.
+- Confirmed all 19 tests passed on main.
+
 
 ## Milestone 3: Continuous integration
 
-Status: Workflow verified on GitHub; awaiting pull request review
+Status: Merged into main through pull request #3
 
 Branch: codex/add-ci
 
@@ -93,8 +93,9 @@ Branch: codex/add-ci
 - Staged whitespace check passed.
 - The first GitHub Actions run completed successfully for commit 9f336f4.
 
-### Remaining work
+### Completion
 
-- Open and review the pull request.
-- Confirm the pull request test run passes.
-- Merge and verify the workflow on main.
+- Push and pull request test runs passed on GitHub.
+- Merged through pull request #3.
+- Updated the local main branch and confirmed all 19 tests passed.
+- Confirmed the GitHub Actions run on main passed.

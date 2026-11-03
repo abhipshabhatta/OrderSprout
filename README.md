@@ -7,11 +7,13 @@ Built with Python, Flask, HTML, CSS, and SQLite.
 
 ## Project status
 
-The first application milestone is in development.
+The first local application milestone and continuous integration are
+merged into main.
+
 Creating orders, editing payments and statuses, and retaining data
 after restarting have been checked manually.
 
-The initial automated test suite passes all 19 tests.
+All 19 automated tests pass locally and in GitHub Actions.
 Further improvements will be developed in separate milestones.
 
 ## Features
@@ -37,12 +39,6 @@ Clone the repository and enter its folder:
 ```bash
 git clone https://github.com/abhipshabhatta/OrderSprout.git
 cd OrderSprout
-```
-
-The application is currently being developed on this branch:
-
-```bash
-git switch codex/add-order-book
 ```
 
 Create a virtual environment for a fresh clone:
@@ -128,7 +124,11 @@ A failed run should be investigated before merging.
 ## Development approach
 
 Work is organized into branches, meaningful commits, and pull requests.
-The current application milestone is in draft pull request #2.
+Completed changes are merged into main after review and passing checks.
+
+- Project foundation: merged through pull request #1.
+- Local order management application: merged through pull request #2.
+- Continuous integration: merged through pull request #3.
 
 ## Documentation
 
